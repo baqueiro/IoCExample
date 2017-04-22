@@ -1,1 +1,1 @@
-Simple .NET IoC
+Simple .NET IoC from scratch
