@@ -17,33 +17,40 @@ namespace DependencyInjectionExample
             // Simple IoC
             MarketEquityCalculator instance0 = IocSimple();
 
-            string equitySimple = instance0.GetFirstEquity();
+            var equitySimple = instance0.FirstEquityGetItem();
+            var markets0 = instance0.MarketsGetList();
 
             Console.WriteLine(equitySimple);
+            Console.WriteLine(markets0[0]);
 
             // Nasdaq
             MarketEquityCalculator instance1 = IoCNasdaq();
 
-            string firstEquityNasdaq = instance1.GetFirstEquity();
+            var firstEquityNasdaq = instance1.FirstEquityGetItem();
+            var markets1 = instance1.MarketsGetList();
 
             Console.WriteLine(firstEquityNasdaq);
+            Console.WriteLine(markets1[0]);
 
 
             // IPC
             MarketEquityCalculator instance2 = IoCIPC();
 
-            string firstEquityIPC = instance2.GetFirstEquity();
+            string firstEquityIPC = instance2.FirstEquityGetItem();
+            var markets2 = instance2.MarketsGetList();
 
             Console.WriteLine(firstEquityIPC);
+            Console.WriteLine(markets2[0]);
 
             Console.ReadKey();
         }
 
         private static MarketEquityCalculator IocSimple()
         {
-            IMarketEquity market = new NasdaqMarket();
+            IMarketEquity marketEquity = new NasdaqMarket();
+            IMarket market = new Market();
 
-            MarketEquityCalculator instance = new MarketEquityCalculator(market);
+            MarketEquityCalculator instance = new MarketEquityCalculator(marketEquity, market);
 
             return instance;
         }
@@ -52,6 +59,7 @@ namespace DependencyInjectionExample
         {
             var container = new IoCContainer();
             container.Register<IMarketEquity, NasdaqMarket>();
+            container.Register<IMarket, Market>();
             MarketEquityCalculator instance = container.Resolve<MarketEquityCalculator>();
             return instance;
         }
@@ -60,6 +68,7 @@ namespace DependencyInjectionExample
         {
             var container = new IoCContainer();
             container.Register<IMarketEquity, IPCMarket>();
+            container.Register<IMarket, Market>();
             MarketEquityCalculator instance = container.Resolve<MarketEquityCalculator>();
             return instance;
         }

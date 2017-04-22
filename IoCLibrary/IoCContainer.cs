@@ -25,27 +25,11 @@ namespace IoCLibrary
 
         public T Resolve<T>()
         {
-            //var types = AppDomain.CurrentDomain.GetAssemblies().Where(p => !IgnoreSystemAsemblies(p));
-
-            var values = container.Values.ToArray();
-
-            dynamic o = Activator.CreateInstance(values[0]);
-
             var constructor = typeof(T).GetConstructor(container.Keys.ToArray());
 
-            object i = constructor.Invoke(new object[] { o });
+            var instancesList = container.Values.Select(p => Activator.CreateInstance(p)).ToArray();
 
-            return (T)i;
+            return (T)constructor.Invoke(instancesList);
         }
-
-        private bool IgnoreSystemAsemblies(Assembly p)
-        {
-            return p.FullName.Contains("Microsoft.")
-                    || p.FullName.Contains("System")
-                    || p.FullName.Contains("mscorlib")
-                    || p.FullName.Contains("vshost32");
-        }
-
-        
     }
 }

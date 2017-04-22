@@ -10,15 +10,23 @@ namespace Financial
     public class MarketEquityCalculator
     {
         public IMarketEquity MarketEquity { get; set; }
-        
-        public MarketEquityCalculator(IMarketEquity instance)
+
+        public IMarket Market { get; set; }
+
+        public MarketEquityCalculator(IMarketEquity marketEquityInstance, IMarket marketInstance)
         {
-            MarketEquity = instance;
+            MarketEquity = marketEquityInstance;
+            Market = marketInstance;
         }
 
-        public string GetFirstEquity()
+        public string FirstEquityGetItem()
         {
             return MarketEquity.EquityGetList().FirstOrDefault();
+        }
+
+        public List<string> MarketsGetList()
+        {
+            return Market.MarketsGetList();
         }
     }
 }

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IPCMarket.cs" />
+    <Compile Include="Market.cs" />
     <Compile Include="NasdaqMarket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
